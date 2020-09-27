@@ -1,2 +1,24 @@
-# AprendendoFrontEnd-Pagina-de-Vendas
-Exercício proposta na aula de Desenvolvimento Web, com objetivo de criar uma página que simulasse um sistema de vendas online.
+# vendas
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
