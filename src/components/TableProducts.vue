@@ -2,11 +2,7 @@
     <div>
         <table class="tableSorteio">
             <tr>
-                <th>
-                    Product
-                    <!-- <img src="../images/asc.png" width="20px" height="20px" @click="ordenarPessoa('asc')">
-                    <img src="../images/desc.png" width="20px" height="20px" @click="ordenarPessoa('desc')"> -->
-                </th>
+                <th>Product</th>
                 <th>Amount</th> 
                 <th>Unit Cost</th> 
                 <th>Discount</th> 
@@ -18,7 +14,7 @@
                 <td id='amount'>{{p.amount}}</td>
                 <td id='unit_cost'>{{p.unit_cost}}</td>
                 <td id='discount'>{{p.discount}}</td>
-                <td id='total'>{{(p.amount * p.unit_cost)-p.discount}}</td>
+                <td id='total'>{{p.total}}</td>
                 <td>
                     <img class="botaoImagem" src="../images/delete.png" width="20px" height="20px" @click="delProduct(index)">
                     <img class="botaoImagem" src="../images/alterar.png" width="20px" height="20px" @click="alterProduct(index)">
@@ -33,13 +29,14 @@ export default {
     props: {
         products: Array,
     },
+
     methods: {
         delProduct(index) {
             this.$emit('delete', index)
         },
         alterProduct(index) {
             this.$emit('alter', index)
-        }
+        },
     },
 }
 </script>

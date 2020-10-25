@@ -4,8 +4,6 @@
             <v-dialog v-if="true" v-model="dialog" persistent max-width="400px">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn color="primary" dark v-bind="attrs" v-on="on">Add Product</v-btn>
-                    <v-btn color="primary" dark v-bind="attrs" v-on="on">Confirm/Save</v-btn>
-                    <v-btn color="primary" dark v-bind="attrs" v-on="on">Save</v-btn>
                 </template>
                 <v-card>
                     <v-card-title>
@@ -32,7 +30,7 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-btn class="dialogBTN" color="blue darken-1" text @click="dialog = false">Close</v-btn>
-                        <v-btn class="dialogBTN" color="blue darken-1" text @click="addProduct">Save</v-btn>
+                        <v-btn class="dialogBTN" color="blue darken-1" text @click="addProduct">Add</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -44,12 +42,16 @@
 
 <script>
   export default {
+    props: {
+        products: Array,
+    },
+
     data() {
         return {
             dialog: false,
             product: {
                 name: '',
-                amount: '',
+                amount: 1,
                 unit_cost: '',
                 discount: '',
             }
@@ -57,8 +59,15 @@
     },
     methods: {
         addProduct() {
-            this.$emit('addProduct', this.product)
-        }
+            const alreadyExist = this.products.some(p => p.name == this.product.name)
+            if (alreadyExist == true) {
+                alert('Essa pessoa já foi adicionada.')
+            } else if (this.product.name != '' && this.product.amount != '' && this.product.unit_cost != '' && this.product.discount != '') {
+                this.$emit('addProduct', this.product)
+            } else {
+                alert('Todos os campos são obrigatórios')
+            }
+        },
     }
   }
 </script>
@@ -66,6 +75,11 @@
 
 
 <style>
+.v-btn {
+  display:inline;
+  text-align: center;
+}
+
 element.style {
     transform-origin: center center;
     max-width: 600px;

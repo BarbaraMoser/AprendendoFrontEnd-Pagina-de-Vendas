@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form v-on:submit.prevent = "setOrder()">
+    <!-- <form v-on:submit.prevent = "setOrder()"> -->
         <input type="text" placeholder="Order number" required v-model="newOrder.number"/>
         <div class="items">
             <label for="date">Issuance date</label>
@@ -45,14 +45,14 @@ export default {
     },
     methods: {
         setOrder() {
-            this.$emit('set', this.newOrder)
+            this.$emit('newOrder', this.newOrder)
         },
         clientFiltered() {
             return this.clients.filter(c => {
                 return c.nome.toUpperCase().startsWith(this.clientFilter.toUpperCase()) 
             })
             // return this.clients.filter((value) => value == this.clientFilter)
-        }
+        },
     }
 }
 </script>
