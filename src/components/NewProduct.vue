@@ -54,6 +54,7 @@
                 amount: 1,
                 unit_cost: '',
                 discount: '',
+                total: '',
             }
         }
     },
@@ -63,6 +64,7 @@
             if (alreadyExist == true) {
                 alert('Essa pessoa já foi adicionada.')
             } else if (this.product.name != '' && this.product.amount != '' && this.product.unit_cost != '' && this.product.discount != '') {
+                this.product.total = (this.product.amount * this.product.unit_cost) - this.product.discount
                 this.$emit('addProduct', this.product)
             } else {
                 alert('Todos os campos são obrigatórios')

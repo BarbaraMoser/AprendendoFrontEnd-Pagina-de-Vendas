@@ -13,9 +13,9 @@
       </div>
       <new-product :products='orderProducts' @addProduct='addProductToOrder'/>
       <table-products :products='orderProducts' @delete='delProduct' @alter='alterProduct'/>
-      <div id="tableInfoContent">
-        <p> Total Pedido: R$ {{sumTotalOrder}} </p>
-        <p> Quantidade Itens: {{totalOrdersItems}} </p>
+      <div class="totals">
+        <p> Total Pedido: R$ {{total}} </p>
+        <p> Quantidade Itens: {{itens}} </p>
       </div>  
       <div>
         <v-btn type="submit"  class='orderButtons' color="primary" dark>Save</v-btn>
@@ -54,8 +54,6 @@ export default {
         dateIssue: '',
         clientName: '',
       },
-      // totalOrdersValue: 0,
-      // totalOrdersItems: 0,
     }
   },
   methods: {
@@ -65,11 +63,9 @@ export default {
         amount: product.amount,
         unit_cost: product.unit_cost,
         discount: product.discount,
-        total: (product.amount * product.unit_cost)-product.discount,
+        total: product.total,
       } 
       this.orderProducts.push(newProduct)
-      this.sumTotalOrder()
-      this.totalOrdersItems = this.orderProducts.length()
     },
     delProduct(index) {
       let productName = this.orderProducts[index].name
@@ -114,26 +110,18 @@ export default {
         } 
         this.orders.push(newOrder)
         alert('Pedido salvo com sucesso!')
+        this.$dispatch('orderProducts', this.orders);
       }
-    },
-    sumTotalOrder() {
-      let totalOrdersValue = 0
-      for (var i = 0; i < this.products.length; i++) {
-        totalOrdersValue += parseFloat(this.products[i].total).toFixed(2)
-      }
-      return totalOrdersValue
     },
   },
-
+  events: {
+    'orderProducts'(orders) {
+        this.$broadcast('orderProducts', orders);
+    },
+  },
   computed: {
-    total: function () { return this.products.length === 0 ? 0 : this.products.reduce((a, b) => ({ total: a.total + b.total })).total }
-    // sumTotalOrder: function () {
-    //   let totalOrdersValue = 0
-    //   for (var i = 0; i < this.products.length; i++) {
-    //     totalOrdersValue += parseFloat(this.products[i].total).toFixed(2)
-    //   }
-    //   return totalOrdersValue      
-    // }
+    total: function () { return this.orderProducts.length === 0 ? 0 : this.orderProducts.reduce((a, b) => ({ total: a.total + b.total })).total },
+    itens: function () { return this.orderProducts.length}  
   }
 }
 </script>
